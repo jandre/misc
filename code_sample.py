@@ -136,16 +136,6 @@ def print_tree_helper(file, level, formatter):
 	else:
 		formatter.print_item(os.path.basename(file), level, FILE)
 
-def try_get_sort(input):
-	" returns sort or exits and prints usage "
-	if input == "dir":
-		return directories_first_sort
-	elif input == "alpha":
-		return alpha_sort
-	else:
-		print "-s value is wrong; valid values are 'dir' or 'alpha'"
-		usage()
-		sys.exit(2)		
 		
 class FileOutputter:
 
