@@ -5,21 +5,18 @@ This code represents an example of a retry pattern I'm testing out.
 
 To make a method retryable, just add the @retryable decorator:
 
-<pre>
-@retryable(<retry frequency seconds>,(<exception_that_can_be_retried>, ), [max_retries],[stop_object])
-</pre>
+    @retryable(<retry frequency seconds>,(<exception_that_can_be_retried>, ), [max_retries],[stop_object])
 
 e.g.:
-<pre>
+ 
     # retries every 60 seconds every time there is a connection error.
     @retryable(60, (ConnectionError,))
     def function(self):
-         ...
-</pre>
+         ... 
 
 **details:**
-* "stop_object" must have two properties, a boolean "stopped" and a threading.Condition stop_condition
-* to retry forever, set max_retries=0
+ * "stop_object" must have two properties, a boolean "stopped" and a threading.Condition stop_condition
+ * to retry forever, set max_retries=0
 
 
 Enjoy!
@@ -53,8 +50,4 @@ immediately.
 In this scenario, on failure to call webmethod a in step 2, it would be nice if the code waited a while, then retried again to see if the webservice was available again.  This could happen indefinitely, until someone requested the program were stopped.   A stop (or a max_limit reached on the # of retries) basically bubbles the exception up to be handled by the main loop, which should have some general "catch all" that can do something meaningful with that error (email someone).
 
 Python fortunately has some very nice language constructs to accomplish all of this, hence this code I hacked up. Perhaps it will be useful to you too!
-
-
-
-
 
