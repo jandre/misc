@@ -15,12 +15,16 @@ e.g.:
          ... 
 
 **details:**
+
  * "stop_object" must have two properties, a boolean "stopped" and a threading.Condition stop_condition
+
  * to retry forever, set max_retries=0
 
 
 Enjoy!
+
 -Jen
+
 jandre@gmail.com
 
 
