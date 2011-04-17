@@ -75,12 +75,13 @@ class MainThread(threading.Thread, Stoppable):
 
 
 
-    @retryable(10, (ConnectionError, SomeOtherError))
+    @retryable(1, (ConnectionError, SomeOtherError))
     def get_job_from_database (self):
 
         """ Pretend this represents retrieval of job data from a database.  A ConnectionError or SomeOtherError
         is a valid retryable exception.  """
 
+        self.i = self.i + 1
         logging.info("i=%d" % self.i)
         if self.i < 3:
             raise ConnectionError("I'm a connection exception - please retry on this.")
@@ -96,7 +97,6 @@ class MainThread(threading.Thread, Stoppable):
         """ hello, I do stuff in a loop, like look for new jobs to run."""
         try:
             while (not self.stopped):
-                self.i = self.i + 1
                 job = self.get_job_from_database()
 
                 if (job):
