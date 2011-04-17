@@ -14,11 +14,18 @@ e.g.:
     def function(self):
          ... 
 
+By retryable, I mean that if one of the expected "retryable" exceptions, the function will not throw it - it will simply retry for as long as it can, sleeping for <retry frequence seconds> in between.  A successful function call will return the results as expected.  
+
+if, for some reason, the function never succeeds (say, the # of tries exceeds the max_retries) we'll just throw up the last exception that caused the issue.
+
+note: a failure must be represented by an exception in the current pattern example.  code changes will need to be made if you want the decorator to check for bad return values.
+
+
 **details:**
 
- * "stop_object" must have two properties, a boolean "stopped" and a threading.Condition stop_condition
+ * "stop_object" is used to determine when to stop retrying (if the main program receives a shutdown message, for example).  it must have two properties, a boolean "stopped" and a threading.Condition stop_condition
 
- * to retry forever, set max_retries=0
+ * max_retries is a high limit of the # of retries to make. to retry forever, set max_retries=0
 
 
 Enjoy!
